@@ -1,0 +1,7 @@
+@import "primeng/resources/themes/luna-pink/theme.css";
+@import "primeng/resources/primeng.css";
+:root {
+    --bg-color:white;
+    --header-color:white;
+    --border-color: rgb(230, 230, 230);
+}
