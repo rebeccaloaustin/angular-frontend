@@ -1,9 +1,17 @@
 <div class="column gap-1">
-  <div class="row wrap gap-2 space-between">
+  <button 
+    type="button"
+    pButton
+    icon="pi pi-plus"
+    (click)="toggleAddPopup()"
+    label="Add Flavor">
+  </button>  
+  <div class="row wrap gap-1 space-between">
     <app-product
       *ngFor="let product of products"
       [product]="product"
-      (productOutput)="onProductOutput($event)"
+      (edit)="toggleEditPopup($event)"
+      (delete)="toggleDeletePopup($event)"
     ></app-product>
   </div>
 
@@ -14,5 +22,17 @@
     (onPageChange)="onPageChange($event)"
     #paginator
   ></p-paginator>
-
 </div>
+
+<app-edit-popup
+    [product]="selectedProduct"
+    [(display)]="displayEditPopup"
+    (confirm)="onConfirmEdit($event)"
+    header="Edit Product"
+></app-edit-popup>
+
+<app-edit-popup
+    [(display)]="displayAddPopup"
+    (confirm)="onConfirmAdd($event)"
+    header="Add Product"
+></app-edit-popup>
