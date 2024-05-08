@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { Product } from '../../../types';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
@@ -10,18 +16,25 @@ import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [RatingModule, FormsModule, ButtonModule, ConfirmPopupModule, ToastModule],
+  imports: [
+    RatingModule,
+    FormsModule,
+    ButtonModule,
+    ConfirmPopupModule,
+    ToastModule,
+  ],
   providers: [ConfirmationService],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.css'
+  styleUrl: './product.component.css',
 })
 export class ProductComponent {
   constructor(private confirmationService: ConfirmationService) {}
+  @ViewChild('deleteButton') deleteButton: any;
   @Input() product!: Product;
   @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
 
-  editProduct(){
+  editProduct() {
     this.edit.emit(this.product);
   }
   confirmDelete() {
@@ -33,10 +46,9 @@ export class ProductComponent {
       },
     });
   }
-  deleteProduct(){
+  deleteProduct() {
     this.delete.emit(this.product);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

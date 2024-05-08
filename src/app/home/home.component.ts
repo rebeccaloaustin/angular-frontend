@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { Products } from '../../types';
 import { Product } from '../../types';
@@ -7,16 +7,26 @@ import { CommonModule } from '@angular/common';
 import { Paginator, PaginatorModule } from 'primeng/paginator';
 import { EditPopupComponent } from '../components/edit-popup/edit-popup.component';
 import { ButtonModule } from 'primeng/button';
+import { error } from 'console';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ProductComponent, CommonModule, PaginatorModule, EditPopupComponent, ButtonModule],
+  imports: [
+    ProductComponent,
+    CommonModule,
+    PaginatorModule,
+    EditPopupComponent,
+    ButtonModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
   constructor(private productsService: ProductsService) {}
+
+  @ViewChild('paginator') paginator: Paginator | undefined;
+
   products: Product[] = [];
   totalRecords: number = 0;
   rows: number = 5;
@@ -33,7 +43,6 @@ export class HomeComponent {
     if (!product.id) {
       return;
     }
-
     this.deleteProduct(product.id);
   }
 
@@ -47,7 +56,7 @@ export class HomeComponent {
     image: '',
     price: '',
     rating: 0,
-  }
+  };
 
   onConfirmEdit(product: Product) {
     if (!this.selectedProduct.id) {
@@ -63,11 +72,15 @@ export class HomeComponent {
     this.displayAddPopup = false;
   }
 
-  onProductOutput(product: Product){
+  onProductOutput(product: Product) {
     console.log(product, 'Output');
   }
-  onPageChange(event:any){
+  onPageChange(event: any) {
     this.fetchProducts(event.page, event.rows);
+  }
+
+  resetPaginator() {
+    this.paginator?.changePage(0);
   }
 
   fetchProducts(page: number, perPage: number) {
@@ -90,6 +103,7 @@ export class HomeComponent {
         next: (data) => {
           console.log(data);
           this.fetchProducts(0, this.rows);
+          this.resetPaginator();
         },
         error: (error) => {
           console.log(error);
@@ -103,6 +117,7 @@ export class HomeComponent {
         next: (data) => {
           console.log(data);
           this.fetchProducts(0, this.rows);
+          this.resetPaginator();
         },
         error: (error) => {
           console.log(error);
@@ -117,6 +132,7 @@ export class HomeComponent {
         next: (data) => {
           console.log(data);
           this.fetchProducts(0, this.rows);
+          this.resetPaginator();
         },
         error: (error) => {
           console.log(error);
