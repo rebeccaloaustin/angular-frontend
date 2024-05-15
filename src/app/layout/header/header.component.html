@@ -1,7 +1,10 @@
-<header class="wrapper column full-center">
-    <img src="assets/images/logo.png" alt="Logo image" class="logo" />
+<header class="wrapper row full-center">
+    <a routerLink="/" class="logo-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <img src="assets/images/Cookie.png" alt="Logo image" class="logo" />
+    </a>
     <div class="row gap-1">
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a routerLink="/about-us" routerLinkActive="active">About Us</a>
     </div>
 </header>
+
